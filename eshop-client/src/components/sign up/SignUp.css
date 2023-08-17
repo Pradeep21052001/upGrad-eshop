@@ -1,0 +1,22 @@
+
+.form-field {
+    margin: 10px 0px 10px 0px;
+  }
+  
+  .signUpForm {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+  }
+  #selectRole{
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;;
+  }
+
+  .submit{
+    width: 100%;
+    background-color: green;
+    color: white;
+  }

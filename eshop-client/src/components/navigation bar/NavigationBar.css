@@ -1,0 +1,30 @@
+
+.appBar {
+    display: flex;
+    justify-content: space-between; 
+    background-color:  #3f51b5;
+    position: relative !important;    
+}
+
+.toolBar {      
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.auth-button {
+    display: inline; 
+    padding: 0px 5px 0px 5px;
+    margin: 0px;
+    margin-right: 10px;
+    position: relative !important;  
+}
+
+.searchBox{
+    text-align: center;
+    padding: 5px 20px 5px 20px;
+}
+
+.eshop-logo{
+    font-size: 36px;
+}
