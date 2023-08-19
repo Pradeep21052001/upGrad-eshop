@@ -6,10 +6,13 @@ import UserContext, { useUserContext } from '../user cotext/userContext';
 import SignUp from '../sign up/SignUp';
 import Home from '../home/home';
 import AddProducts from '../add products/AddProductsPage';
+import ProductDetails from '../product details/product details';
+import Orders from '../orders/orders';
+import Address from '../address/address';
+import AddAddress from '../add address/add address';
+
 
 export default function MainComponent() {
-
-  const accessToken = '1@3456Qw-';
 
   const { isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin } = useUserContext();
   const history = useHistory();
@@ -25,7 +28,7 @@ export default function MainComponent() {
       })
       .then(response => response.json())
       .then(data => {
-        alert('Registered');
+        history.push('/signIn')
       })
       .catch(error => {
         alert(error);
@@ -41,15 +44,15 @@ export default function MainComponent() {
         },
         body: JSON.stringify(credentialsForm)
       })
-      .then(response => response.json())
+      // .then(response => response.json())
       .then(data => {
-        accessToken = data.accessToken;
+        const accessToken = data.headers.get('X-Auth-Token');
+        sessionStorage.setItem("accessToken", accessToken);
         setIsLoggedIn(true);
-        alert(accessToken)
-
-        setIsAdmin(true);
-
-        history.push('/products')
+        console.log(accessToken);
+        getProducts();
+        fetchCategories();
+        history.push('/products');
       })
       .catch(error => {
         alert("Invalid Credentials!");
@@ -58,15 +61,28 @@ export default function MainComponent() {
 
 
   const [productsList, setProductsList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const accessToken = sessionStorage.getItem("accessToken");
+
 
   async function getProducts() {
-    const response = await fetch("http://localhost:3001/api/v1/users")
-    const data = response.json();
+    const response = await fetch("http://localhost:3001/api/v1/products");
+    const data = await response.json();
     setProductsList(data);
+    console.log('Products from data:', data);
   }
-  useEffect(() => {
-    getProducts();
-  }, [])
+
+  // useEffect(() => {
+  //   getProducts();
+  // }, [productsList]);
+
+
+  async function fetchCategories() {
+    const response = await fetch("http://localhost:3000/products/categories");
+    const data = await response.json();
+    setCategories(data);
+    console.log(data)
+  }
 
 
   async function addProduct(addProductsForm) {
@@ -98,13 +114,24 @@ export default function MainComponent() {
       <Route exact path="/signUp" render={() => <SignUp
         registerDetails={(detailsForm) => registerDetails(detailsForm)} />} />
 
-      <Route exact path="/products" render={() => <ProductsPage 
-        productsList = {productsList}
-        getProducts={() => getProducts()}/>} />
+      <Route exact path="/products" render={() => <ProductsPage
+        productsList={productsList}
+        categories={categories}
+      // getProducts={() => getProducts()}
+      />} />
 
       <Route exact path="/add-products" render={() => <AddProducts
         addProduct={(addProductsForm) => addProduct(addProductsForm)} />} />
+
+      <Route exact path="/product-details/:productId" render={() => <ProductDetails />} />
+
+      <Route exact path="/orders" render={() => <Orders />} />
+
+      <Route exact path="/address" render={() => <Address />} />
+
+      <Route exact path="/add-address" render={() => <AddAddress />} />
+
     </Fragment>
 
   );
-}
+}  

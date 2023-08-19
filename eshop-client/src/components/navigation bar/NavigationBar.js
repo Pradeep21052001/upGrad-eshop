@@ -15,6 +15,7 @@ export default function NavigationBar() {
   function logoutClicked() {
     setIsLoggedIn(false);
     setIsAdmin(false);
+    sessionStorage.removeItem('accessToken');
     history.push('/signIn');
   }
 
@@ -23,6 +24,8 @@ export default function NavigationBar() {
       <ToolBar className='toolBar'>
         <span className='eshop-logo'>
           <ShoppingCartIcon />
+          <span className='eshop-text'>upGrad 
+          eshop</span>
         </span>
         {!isLoggedIn ? (
           <div className='auth-buttons'>
