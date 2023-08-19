@@ -3,6 +3,7 @@ const { AUTH_TOKEN } = require('../constants');
 
 function auth(req, res, next) {
     const token = req.header(AUTH_TOKEN);
+    console.log(token);
 
     if(!token) {
         //401 Unauthorized

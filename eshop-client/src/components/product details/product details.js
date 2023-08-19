@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { Card, ToggleButton, ToggleButtonGroup, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import './product details.css';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Orders from '../orders/orders';
@@ -69,8 +69,8 @@ export default function ProductDetails() {
                                         name="qty"
                                         value={qty}
                                         onChange={inputChangedHandler}
-                                        validators={['required']}
-                                        errorMessages={['Please enter the qty to order']}
+                                        validators={['required', 'minNumber:1']}
+                                        errorMessages={['Please enter the qty to order', 'Quantity must be higher than 0']}
                                     />
                                     <div className='order-btn-container'>
                                         <button className='order-btn'>Proceed to checkout</button>

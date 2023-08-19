@@ -3,7 +3,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button, TextField, Grid, Paper } from '@mui/material';
 import UserContext, { useUserContext } from '../user cotext/userContext';
 import NavigationBar from '../navigation bar/NavigationBar';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function AddAddress() {
 
@@ -22,7 +22,6 @@ export default function AddAddress() {
     const accessToken = sessionStorage.getItem("accessToken");
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(accessToken)
         addAddress(formData);
     };
 
@@ -40,14 +39,14 @@ export default function AddAddress() {
             {
                 method: "POST",
                 headers: {
-                     Authorization: `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "x-auth-token": accessToken
                 },
                 body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
-                alert('Address Added');
+                history.push('/address');
             })
             .catch(error => {
                 alert(error);
@@ -57,7 +56,7 @@ export default function AddAddress() {
     return (
 
         <div>
-            <NavigationBar /> <br></br> <br></br> 
+            <NavigationBar /> <br></br> <br></br>
             {isLoggedIn ? (
                 <>
                     <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>

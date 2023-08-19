@@ -27,8 +27,6 @@ export default function Orders() {
                         <Link to='/address'>
                             <button>Select Address</button>
                         </Link>
-
-                        <button >Place order</button>
                     </div>
                 </div>
 
