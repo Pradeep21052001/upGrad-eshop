@@ -17,7 +17,7 @@ export default function Home() {
                     <Typography variant="h3" className='home-text'>Please login to continue shopping..!</Typography>
                 ) : (
                     <div className='home-text'>
-                        <Typography variant="h3">Please click the below button to explore the products</Typography> <br></br>
+                        <Typography variant="h3">Please click the below button to explore the products..!</Typography> <br></br>
                         <Link to='/products'>
                             <button className='products-btn'>Products</button>
                         </Link>

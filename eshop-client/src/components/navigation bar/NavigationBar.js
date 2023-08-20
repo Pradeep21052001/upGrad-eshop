@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './NavigationBar.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AppBar from '@mui/material/AppBar';
 import ToolBar from '@mui/material/Toolbar';
 import { Link, useHistory } from 'react-router-dom';
-import UserContext, { useUserContext } from '../user cotext/userContext';
+import { useUserContext } from '../user cotext/userContext';
 import { Typography } from '@mui/material';
 
 export default function NavigationBar() {
 
   const { isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin } = useUserContext();
   const history = useHistory();
+  const[searchText,setSearchText] = useState('');
+
+
+  function searchTextchange(e) {
+      setSearchText(e.target.value);
+  }
+
+
+
 
   function logoutClicked() {
     setIsLoggedIn(false);
@@ -38,7 +47,7 @@ export default function NavigationBar() {
           </div>
         ) : (
           <div className='auth-buttons'>
-            <input className='searchBox' type="text" placeholder="Search" />
+            <input className='searchBox' type="text" placeholder="Search" onChange={searchTextchange}/>
             <Link to="/">
               <button className='auth-button'>Home</button>
             </Link>

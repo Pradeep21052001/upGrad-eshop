@@ -52,7 +52,6 @@ export default function MainComponent() {
         sessionStorage.setItem("accessToken", accessToken);
 
         sessionStorage.setItem("userId", credentialsForm['email']);
-        console.log(accessToken)
         const decodedToken = jwt_decode(accessToken);
         if (decodedToken.isAdmin) {
           setIsLoggedIn(true);
@@ -60,12 +59,11 @@ export default function MainComponent() {
         }
         else {
           setIsLoggedIn(true);
-
         }
 
 
         getProducts();
-        fetchCategories();
+        // fetchCategories();
         history.push('/products');
       })
       .catch(error => {
@@ -84,7 +82,7 @@ export default function MainComponent() {
     const response = await fetch("http://localhost:3001/api/v1/products");
     const data = await response.json();
     setProductsList(data);
-    console.log('Products from data:', data);
+    // console.log('Products from data:', data);
   }
 
   useEffect(() => {
@@ -92,12 +90,12 @@ export default function MainComponent() {
   }, []);
 
 
-  async function fetchCategories() {
-    const response = await fetch("http://localhost:3000/products/categories");
-    const data = await response.json();
-    setCategories(data);
-    console.log(data)
-  }
+  // async function fetchCategories() {
+  //   const response = await fetch("http://localhost:3000/products/categories");
+  //   const data = await response.json();
+  //   setCategories(data);
+  //   console.log(data)
+  // }
 
 
   async function addProduct(addProductsForm) {
