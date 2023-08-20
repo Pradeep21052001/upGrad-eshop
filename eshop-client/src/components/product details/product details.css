@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust this value as needed */
+    height: 88vh; /* Adjust this value as needed */
 }
 
 .product-details-card {
@@ -11,12 +11,13 @@
     height: 450px; /* Increased height */
     text-align: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    height: relative;
 }
 
 .product-image {
-    width: 100%; /* Make the image take full width of the card */
-    object-fit: contain; /* Adjust this to 'cover' if needed */
-    height: 50%;
+    width: 100%; 
+    object-fit: contain; 
+    height: 40%;
 }
 
 .card-content {
@@ -32,5 +33,5 @@
     border: none; 
     background-color: rgb(248, 248, 11);
     padding: 5px;
-    margin: 0px 5px 5px 0px;
+    margin: 0px 15px 10px 0px;
   }

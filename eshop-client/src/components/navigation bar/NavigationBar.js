@@ -15,7 +15,7 @@ export default function NavigationBar() {
   function logoutClicked() {
     setIsLoggedIn(false);
     setIsAdmin(false);
-    sessionStorage.removeItem('accessToken');
+    localStorage.clear();
     history.push('/signIn');
   }
 

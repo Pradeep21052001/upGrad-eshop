@@ -9,7 +9,6 @@ import NavigationBar from '../navigation bar/NavigationBar';
 
 export default function ProductDetails() {
 
-
     const history = useHistory();
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
@@ -35,7 +34,11 @@ export default function ProductDetails() {
     }, [productId]);
 
 
-    function orderClicked(productId) {
+    
+
+    function orderClicked() {
+        sessionStorage.setItem("qty", qty);
+        sessionStorage.setItem("productId", productId);
         history.push('/orders');
     }
 
@@ -58,10 +61,13 @@ export default function ProductDetails() {
                                 <Typography variant="body2">Price: ${product.price}</Typography>
                                 <Typography variant="body2">Category: {product.category}</Typography>
                                 <Typography variant="body2">Available items: {product.availableItems}</Typography>
+                                <Typography variant="body2">Description: {product.description}</Typography>
+                                <Typography variant="body2">Manufacturer: {product.manufacturer}</Typography>
+
                             </CardContent>
 
                             <div>
-                                <ValidatorForm onSubmit={() => orderClicked(productId)}>
+                                <ValidatorForm onSubmit={() => orderClicked()}>
                                     <TextValidator
                                         className='form-field'
                                         label="Enter qty"
@@ -73,7 +79,7 @@ export default function ProductDetails() {
                                         errorMessages={['Please enter the qty to order', 'Quantity must be higher than 0']}
                                     />
                                     <div className='order-btn-container'>
-                                        <button className='order-btn'>Proceed to checkout</button>
+                                        <button className='order-btn' type='submit'>Place order</button>
                                     </div>
                                 </ValidatorForm>
                             </div>

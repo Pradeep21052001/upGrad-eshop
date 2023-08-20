@@ -56,7 +56,7 @@ export default function AddAddress() {
     return (
 
         <div>
-            <NavigationBar /> <br></br> <br></br>
+            <NavigationBar /> <br></br> 
             {isLoggedIn ? (
                 <>
                     <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>

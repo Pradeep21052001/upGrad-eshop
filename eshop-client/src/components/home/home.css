@@ -1,0 +1,29 @@
+.wholePage {
+    background-image: url('./image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 88vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-text {
+    text-align: center;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.products-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.products-btn:hover {
+    background-color: #0056b3;
+}

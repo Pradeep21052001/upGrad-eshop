@@ -10,7 +10,7 @@ export default function SignUp({ registerDetails }) {
         lastName: '',
         email: '',
         password: '',
-        //role: 'USER',
+        role: '',
         contactNumber: ''
     });
 
@@ -25,7 +25,7 @@ export default function SignUp({ registerDetails }) {
         registerDetails(detailsForm);
     }
 
-    const { firstName, lastName, email, password, contactNumber } = detailsForm;
+    const { firstName, lastName, email, password, role, contactNumber } = detailsForm;
     return (
         <Fragment>
             <NavigationBar ></NavigationBar>  <br></br> <br></br>
@@ -89,7 +89,7 @@ export default function SignUp({ registerDetails }) {
                         </TextValidator>
                     </div>
                 
-                    {/* <div className='form-field'>
+                    <div className='form-field'>
                         <select 
                         name='role'
                         value={role} 
@@ -97,10 +97,10 @@ export default function SignUp({ registerDetails }) {
                         className="textValidator"
                         id='selectRole'
                         >
-                            <option value="USER">User</option>
-                            <option value="ADMIN">Admin</option>
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
                         </select>
-                    </div> */}
+                    </div>
 
                     <div className='form-field'>
                         <TextValidator

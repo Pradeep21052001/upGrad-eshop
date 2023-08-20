@@ -6,14 +6,16 @@ import { Card, ToggleButton, ToggleButtonGroup, CardContent, CardMedia, Typograp
 import './products.css';
 import ProductDetails from '../product details/product details';
 
-export default function ProductsPage({ productsList, categories }) {
-    
+export default function ProductsPage({ productsList, categories, deleteHandler }) {
+
     const { isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin } = useUserContext();
     const history = useHistory();
 
     // const[products,setProducts] = useState(productsList);
     const [selectedCategory, setSelectedCategory] = useState('Apparel');
     const [sortingOption, setSortingOption] = useState('default');
+    const [showDeletedMessage, setshowDeletedMessage] = useState(false);
+    const [showAddedMessage, setshowAddedMessage] = useState(false);
 
     // useEffect(() => {
     //     // Fetch categories
@@ -47,12 +49,29 @@ export default function ProductsPage({ productsList, categories }) {
         history.push(`/product-details/${productId}`);
     }
 
+    function modifyClicked(productid) {
+        history.push(`/modify-product/${productid}`)
+    }
+
+    function deleteClicked(productid, productname) {
+        deleteHandler(productid, productname);
+        setshowDeletedMessage(true);
+        setTimeout(() => {
+            setshowDeletedMessage(false);
+        }, 2500);
+    }
 
     return (
         <div>
             <NavigationBar />
             {isLoggedIn ? (
                 <>
+                    {showDeletedMessage && <div className="delete-message">
+                        <h3>Product deleted successfully</h3>
+                    </div>}
+                    {/* {showAddedMessage && <div className="message">
+                        <h3>Product added successfully</h3>
+                        </div>} */}
                     <ToggleButtonGroup
                         value={categories}
                         exclusive
@@ -88,13 +107,24 @@ export default function ProductsPage({ productsList, categories }) {
                                     image={product.imageURL}
                                 />
                                 <CardContent>
-                                    <Typography variant="h5">{product.name}</Typography>
-                                    <Typography variant="body2">Price: ${product.price}</Typography>
-                                    <Typography variant="body2">Category: {product.category}</Typography>
+                                    <div>
+                                        <Typography variant="h5">{product.name}</Typography>
+                                        <Typography variant="body2">Price: ${product.price}</Typography>
+                                        <Typography variant="body2">Category: {product.category}</Typography>
+                                    </div>
+                                    {isAdmin &&
+                                        <span>
+                                            <button className='admin-button' id='modify-btn' onClick={() => modifyClicked(product._id)}>Modify</button>
+                                            <button className='admin-button' id='delete-btn' onClick={() => deleteClicked(product._id, product.name)}>Delete</button>
+                                        </span>
+                                    }
                                 </CardContent>
-                                <div className='buy-btn-container'>
-                                    <button className='buy-btn' onClick={() => buyClicked(product._id)}>Buy now</button>
-                                </div>
+                                {!isAdmin &&
+                                    <div className='buy-btn-container'>
+                                        <button className='buy-btn' onClick={() => buyClicked(product._id)}>Buy now</button>
+                                    </div>
+                                }
+
                             </Card>
                         ))}
                     </div>

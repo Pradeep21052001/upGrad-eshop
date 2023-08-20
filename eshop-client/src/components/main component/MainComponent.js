@@ -10,7 +10,9 @@ import ProductDetails from '../product details/product details';
 import Orders from '../orders/orders';
 import Address from '../address/address';
 import AddAddress from '../add address/add address';
-
+import OrderConfrm from '../order confirmed/orderConfirmed';
+import jwt_decode from "jwt-decode";
+import ModifyProduct from '../modify product/modifyProduct';
 
 export default function MainComponent() {
 
@@ -48,8 +50,20 @@ export default function MainComponent() {
       .then(data => {
         const accessToken = data.headers.get('X-Auth-Token');
         sessionStorage.setItem("accessToken", accessToken);
-        setIsLoggedIn(true);
-        console.log(accessToken);
+
+        sessionStorage.setItem("userId", credentialsForm['email']);
+        console.log(accessToken)
+        const decodedToken = jwt_decode(accessToken);
+        if (decodedToken.isAdmin) {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+        }
+        else {
+          setIsLoggedIn(true);
+
+        }
+
+
         getProducts();
         fetchCategories();
         history.push('/products');
@@ -65,6 +79,7 @@ export default function MainComponent() {
   const accessToken = sessionStorage.getItem("accessToken");
 
 
+
   async function getProducts() {
     const response = await fetch("http://localhost:3001/api/v1/products");
     const data = await response.json();
@@ -72,9 +87,9 @@ export default function MainComponent() {
     console.log('Products from data:', data);
   }
 
-  // useEffect(() => {
-  //   getProducts();
-  // }, [productsList]);
+  useEffect(() => {
+    getProducts();
+  }, []);
 
 
   async function fetchCategories() {
@@ -91,13 +106,43 @@ export default function MainComponent() {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+          "x-auth-token": accessToken
         },
         body: JSON.stringify(addProductsForm)
       })
       .then(response => response.json())
       .then(data => {
-        alert('Product Added');
+        history.push('/products');
+        getProducts();
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }
+
+  async function deleteHandler(productid) {
+    await fetch(`http://localhost:3001/api/v1/products/${productid}`, {
+      method: "DELETE",
+    })
+      .then(response => {
+        // alert(`deleted ${productName}`)
+        getProducts();
+      })
+  }
+
+  async function modifyHandler(modifyProductsForm,productid) {
+    await fetch(`http://localhost:3001/api/v1/products/${productid}`,
+      {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(modifyProductsForm)
+      })
+      .then(response => response.json())
+      .then(data => {
+        getProducts();
+        history.push('/products');
       })
       .catch(error => {
         alert(error);
@@ -117,7 +162,7 @@ export default function MainComponent() {
       <Route exact path="/products" render={() => <ProductsPage
         productsList={productsList}
         categories={categories}
-      // getProducts={() => getProducts()}
+        deleteHandler={deleteHandler}
       />} />
 
       <Route exact path="/add-products" render={() => <AddProducts
@@ -127,9 +172,13 @@ export default function MainComponent() {
 
       <Route exact path="/orders" render={() => <Orders />} />
 
-      <Route exact path="/address" render={() => <Address />} />
-
       <Route exact path="/add-address" render={() => <AddAddress />} />
+
+      <Route exact path="/order-confirm" render={() => <OrderConfrm />} />
+
+      <Route exact path="/modify-product/:productid" render={() => <ModifyProduct
+        modifyHandler={modifyHandler}
+      />} />
 
     </Fragment>
 

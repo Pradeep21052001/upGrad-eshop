@@ -39,4 +39,23 @@
     padding: 5px;
     margin: 0px 5px 5px 0px;
   }
-  
+  .admin-button{
+    border: none;
+    border-radius: 3px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 10px;
+    color: white;
+  }
+  #modify-btn{
+    background-color: green;
+  }
+  #delete-btn{
+    background-color: red;
+  }
+  .delete-message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

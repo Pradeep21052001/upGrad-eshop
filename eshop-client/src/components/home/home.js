@@ -10,20 +10,22 @@ import { Link, useHistory } from 'react-router-dom';
 export default function Home() {
     const { isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin } = useUserContext();
     return (
-        <Fragment>
+        <div>
             <NavigationBar></NavigationBar>
+            <div className='wholePage'>
+                {!isLoggedIn ? (
+                    <Typography variant="h3" className='home-text'>Please login to continue shopping..!</Typography>
+                ) : (
+                    <div className='home-text'>
+                        <Typography variant="h3">Please click the below button to explore the products</Typography> <br></br>
+                        <Link to='/products'>
+                            <button className='products-btn'>Products</button>
+                        </Link>
+                    </div>
+                )}
+            </div>
 
-            {!isLoggedIn ? (
-                <Typography variant="h3">Please login to continue shopping..!</Typography>
-            ) : (
-                <div>
-                    <Typography variant="h3">Please click the below button to explore the products</Typography>
-                    <Link to='/products'>
-                        <button>Products</button>
-                    </Link>
-                </div>
-            )}
-        </Fragment>
+        </div>
 
     )
 }
